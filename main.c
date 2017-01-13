@@ -15,7 +15,9 @@ typedef int increment;
 void initTab(int Tab[TAILLE][TAILLE]);
 void VerifNE(Point *p);
 void VerifNO(Point *p);
-void verifcarree(Point *p,int Tab [TAILLE][TAILLE]);
+void Remplissage(int Tab[TAILLE][TAILLE],Point *p);
+void affiche(int Tab[TAILLE][TAILLE]);
+//void verifcarree(Point *p,int Tab [TAILLE][TAILLE]);
 
 
 //BUT : Initialiser et afficher un carrée magique dont la somme des lignes, colonnes et diagonales on la meme valeur
@@ -24,43 +26,14 @@ void verifcarree(Point *p,int Tab [TAILLE][TAILLE]);
 int main()
 {
 Point p;//variable de type structuré servant de curseur
-increment inc=1;//variable increment servant a remplir le tableau
 int Tab[TAILLE][TAILLE];//Tableau
-int i=0;//variables pour les boucles for
-int j=0;
 
-    initTab(Tab);//Initialize a 0 les cases du tableau
-    //Calcule le millieu du carre
-    p.y=(TAILLE/2)-1;
-    p.x=(TAILLE/2);
 
-    for(i=0;i<TAILLE;i++){
-        for(j=0;j<TAILLE;j++){
-            if(Tab[p.y][p.x]==0){
-                Tab[p.y][p.x]=inc;//Incremente le tableaux
-                VerifNE(&p);//Verifie si on ne sort pas du tableux en se deplacant au Nord Est
-            }else{
-                VerifNO(&p);//Verifie si on ne sort pas du tableux en se deplacant au Nord Ouest
-                Tab[p.y][p.x]=inc;//Incremente le tableaux
-                VerifNE(&p);//Verifie si on ne sort pas du tableux en se deplacant au Nord Est
-            }
-            inc+=1;
-        }
-    }
+    initTab(Tab);
+    Remplissage(Tab,&p);
+    affiche(Tab);
 
-    //Boucle pour afficher le tableaux
-    for(i=0;i<TAILLE;i++){
-        for(j=0;j<TAILLE;j++){
-            if(j==0){
-                printf("\n%d  ",Tab[i][j]);
-            }else{
-                printf("%d  ",Tab[i][j]);
-            }
-        }
-    }
-
-    //verifcarree(&p, Tab);//verifie si les ligne, colonne ou diagonale sont egales
-
+    //verifcarree(&p, Tab);
     return 0;
 }
 
@@ -81,6 +54,54 @@ int j=0;
 }
 
 
+//BUT : Remplit le carree magique
+//ENTREE : Le tableau
+//SORTIE : Le tableau remplis
+void Remplissage(int Tab[TAILLE][TAILLE],Point *p)
+{
+increment inc=1;//variable increment servant a remplir le tableau
+int i=0;//variables pour les boucles for
+int j=0;
+
+    //Calcule le millieu du carre
+    p->y=(TAILLE/2)-1;
+    p->x=(TAILLE/2);
+
+    for(i=0;i<TAILLE;i++){
+        for(j=0;j<TAILLE;j++){
+            if(Tab[p->y][p->x]==0){
+                Tab[p->y][p->x]=inc;//Incremente le tableaux
+                VerifNE(p);//Verifie si on ne sort pas du tableux en se deplacant au Nord Est
+            }else{
+                VerifNO(p);//Verifie si on ne sort pas du tableux en se deplacant au Nord Ouest
+                Tab[p->y][p->x]=inc;//Incremente le tableaux
+                VerifNE(p);//Verifie si on ne sort pas du tableux en se deplacant au Nord Est
+            }
+            inc+=1;
+        }
+    }
+}
+
+
+//BUT : Affiche le tableau
+//ENTREE : Le tableau
+//SORTIE : Le tableau afficher
+void affiche(int Tab[TAILLE][TAILLE])
+{
+int i=0;
+int j=0;
+
+    for(i=0;i<TAILLE;i++){
+        for(j=0;j<TAILLE;j++){
+            if(j==0){
+                printf("\n%d  ",Tab[i][j]);
+            }else{
+                printf("%d  ",Tab[i][j]);
+            }
+        }
+    }
+
+}
 //BUT : Verifie si on ne sort pas du tableux en se deplacant au Nord Est
 //ENTREE : Adresse de p
 //SORTIE : Adresse de p modifier en consequence (Sortie du tableau)
